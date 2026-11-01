@@ -1,19 +1,15 @@
 import { notFound } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { getPostById } from "@/utils/posts";
 
 type PostPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export const prisma = new PrismaClient();
-
 export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
-  const post = await prisma.post.findUnique({
-    where: {
-      id: Number(id),
-    },
-  });
+
+  // Вызываем изолированную функцию из утилит
+  const post = await getPostById(Number(id));
 
   if (!post) {
     notFound();

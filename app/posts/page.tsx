@@ -1,11 +1,9 @@
 import { Suspense } from "react";
-import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
-
-const prisma = new PrismaClient();
+import { getPosts } from "@/utils/posts";
 
 async function PostList() {
-  const posts = await prisma.post.findMany();
+  const posts = await getPosts();
 
   return (
     <ul className="space-y-3">
