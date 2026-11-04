@@ -4,6 +4,7 @@ import { getPosts } from "@/utils/posts";
 import { createPost } from "@/actions/actions";
 import EditButton from "@/components/EditButton";
 import DeleteButton from "@/components/DeleteButton";
+import UpvoteButton from "@/components/UpvoteButton";
 
 async function PostList() {
   const posts = await getPosts();
@@ -20,6 +21,7 @@ async function PostList() {
                 {post.title.charAt(0).toUpperCase() + post.title.slice(1)}
               </Link>
               <div className="inline-flex gap-2">
+                <UpvoteButton postId={post.id} votes={post.votes} />
                 <EditButton postId={post.id} />
                 <DeleteButton postId={post.id} />
               </div>
