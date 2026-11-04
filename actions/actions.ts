@@ -50,5 +50,4 @@ export async function updatePost(id: number, formData: FormData) {
   revalidatePath("/posts");
   revalidatePath(`/posts/${id}`);
   revalidatePath(`/posts/${id}/edit`);
-  redirect(`/posts/${id}`);
 }

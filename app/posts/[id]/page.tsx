@@ -12,7 +12,6 @@ type PostPageProps = {
 export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
 
-  // Вызываем изолированную функцию из утилит
   const post = await getPostById(Number(id));
 
   if (!post) {
