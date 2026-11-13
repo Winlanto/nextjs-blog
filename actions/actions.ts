@@ -1,5 +1,6 @@
 "use server";
 
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -7,6 +8,11 @@ import { redirect } from "next/navigation";
 const prisma = new PrismaClient();
 
 export async function createPost(formData: FormData) {
+  const { isAuthenticated } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+  if (!isLoggedIn) {
+    redirect("/api/auth/login");
+  }
   const title = String(formData.get("title") ?? "").trim();
   const content = String(formData.get("content") ?? "").trim();
 
@@ -22,6 +28,11 @@ export async function createPost(formData: FormData) {
 }
 
 export async function deletePost(id: number) {
+  const { isAuthenticated } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+  if (!isLoggedIn) {
+    redirect("/api/auth/login");
+  }
   await prisma.post.delete({
     where: {
       id,
@@ -33,6 +44,11 @@ export async function deletePost(id: number) {
 }
 
 export async function updatePost(id: number, formData: FormData) {
+  const { isAuthenticated } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+  if (!isLoggedIn) {
+    redirect("/api/auth/login");
+  }
   const title = String(formData.get("title") ?? "").trim();
   const content = String(formData.get("content") ?? "").trim();
 

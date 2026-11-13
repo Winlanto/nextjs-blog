@@ -10,6 +10,7 @@
     "postinstall": "prisma skills sync || exit 0"
   },
   "dependencies": {
+    "@kinde-oss/kinde-auth-nextjs": "^2.13.2",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0"

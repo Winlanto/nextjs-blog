@@ -1,5 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
+import {
+  RegisterLink,
+  LoginLink,
+  LogoutLink,
+} from "@kinde-oss/kinde-auth-nextjs/components";
 
 export default function Header() {
   return (
@@ -21,6 +26,17 @@ export default function Header() {
           Posts
         </Link>
       </nav>
+      <div className="flex items-center gap-4">
+        <LoginLink className="rounded bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
+          Sign in
+        </LoginLink>
+        <RegisterLink className="rounded border border-zinc-950 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-zinc-100">
+          Sign up
+        </RegisterLink>
+        <LogoutLink className="rounded bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
+          Sign out
+        </LogoutLink>
+      </div>
     </header>
   );
 }
