@@ -1,17 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  RegisterLink,
-  LoginLink,
-  LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { Suspense } from "react";
+import AuthButtons from "./AuthButtons";
 
 export default async function Header() {
-  const { getUser, isAuthenticated } = getKindeServerSession();
-  const authenticated = await isAuthenticated();
-  const user = authenticated ? await getUser() : null;
-
   return (
     <header className="grid grid-cols-3 h-14 items-center border-b border-zinc-300 px-4 sm:px-6">
       <Link href="/" className="justify-self-start">
@@ -32,25 +24,13 @@ export default async function Header() {
         </Link>
       </nav>
       <div className="flex items-center gap-4 justify-self-end">
-        {authenticated ? (
-          <>
-            <span className="text-sm font-medium text-zinc-600">
-              {user?.email}
-            </span>
-            <LogoutLink className="rounded bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
-              Sign out
-            </LogoutLink>
-          </>
-        ) : (
-          <>
-            <LoginLink className="rounded bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-800">
-              Sign in
-            </LoginLink>
-            <RegisterLink className="rounded border border-zinc-950 px-4 py-2 text-sm font-medium text-zinc-950 hover:bg-zinc-100">
-              Sign up
-            </RegisterLink>
-          </>
-        )}
+        <Suspense
+          fallback={
+            <div className="h-9 w-36 animate-pulse rounded bg-zinc-200" />
+          }
+        >
+          <AuthButtons />
+        </Suspense>
       </div>
     </header>
   );
